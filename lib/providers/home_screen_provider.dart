@@ -10,6 +10,7 @@ class HomeScreenProvider extends ChangeNotifier{
 
   List<CategoryVO> categories = [];
   List<ProductVO> flashSales = [];
+  List<ProductVO> fashions = [];
   final ScrollController _scrollController = ScrollController();
   final ProductDataAgent _productDataAgent = ProductDataAgentImpl();
   ScrollController get scrollController =>_scrollController;
@@ -49,7 +50,15 @@ class HomeScreenProvider extends ChangeNotifier{
       }
       notifyListeners();
     });
+    /// fetch fashion products
+    _productDataAgent.fetchFashionsProductStream().listen((event) {
+      if(event !=null){
+        fashions = event;
+      }
+      notifyListeners();
+    });
   }
+
 
   @override
   void dispose() {

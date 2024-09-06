@@ -42,8 +42,14 @@ class ProductDataAgentImpl extends ProductDataAgent{
       .map((event) => event.docs.map((e) => ProductVO.fromJson(e.data())).toList());
 
   @override
-  Stream<List<ProductVO>?> fetchFashionsProductStream() {
-    // TODO: implement fetchFashionsProductStream
-    throw UnimplementedError();
-  }
+  Stream<List<ProductVO>?> fetchFashionsProductStream()=>_firebaseFirestore.collection('products')
+      .where('category',isEqualTo: 'Fashions')
+      .snapshots()
+      .map((event) => event.docs.map((e) => ProductVO.fromJson(e.data())).toList());
+
+  @override
+  Future<ProductVO?> fetchProductByIdStream(String id) =>_firebaseFirestore
+      .collection('products')
+      .doc(id)
+      .get().then((value) => ProductVO.fromJson(value.data() as Map<String,dynamic>));
 }

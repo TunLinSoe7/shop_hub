@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shop_hub/navigation_menu.dart';
+import 'package:shop_hub/network/auth_data_agent/auth_gate.dart';
 import 'package:shop_hub/pages/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home:const AuthGate()
     );
   }
 }

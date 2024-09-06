@@ -1,21 +1,18 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_hub/data/vos/product_vo.dart';
-import 'package:shop_hub/providers/product_by_category_provider.dart';
+import 'package:shop_hub/providers/fashion_all_provider.dart';
 
 import '../utils/item_views/grid_product_item_views.dart';
 
-class ProductByCategoryPage extends StatelessWidget {
-  const ProductByCategoryPage({super.key, required this.category});
-  final String category;
+class SeeAllFashionPage extends StatelessWidget {
+  const SeeAllFashionPage({super.key});
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_)=>ProductByCategoryProvider(category),
-      child: Consumer<ProductByCategoryProvider>(
+      create: (_)=>SellAllFashionProvider(),
+      child: Consumer<SellAllFashionProvider>(
         builder: (_,provider,__){
           return Scaffold(
             backgroundColor: Colors.white.withOpacity(0.96),
@@ -47,22 +44,21 @@ class ProductByCategoryPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
-                    child:GridView.builder(
-                  itemCount: provider.products.length,
+                Expanded(child:GridView.builder(
+                    itemCount: provider.fashions.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.7,
+                        childAspectRatio: 0.7,
                         crossAxisCount:2), itemBuilder: (_,index){
-                  final product = provider.products[index];
+                  final product = provider.fashions[index];
                   return GridProductItemView(
                       isFlashSale: product.isFlashSale ?? false,
-                    image:product.image,
-                    name:product.name,
-                    price:'${product.price}',
-                    flashSalePrice:'${product.isFlashSale}'
+                      image:product.image,
+                      name:product.name,
+                      price:'${product.price}',
+                      flashSalePrice:'${product.isFlashSale}'
                   );
                 }))
-               // Text('${provider.products.first.name}')
+                // Text('${provider.products.first.name}')
               ],
             ),
           );
@@ -71,7 +67,6 @@ class ProductByCategoryPage extends StatelessWidget {
     );
   }
 }
-
 
 class SortFilterWidget extends StatelessWidget {
   const SortFilterWidget({
