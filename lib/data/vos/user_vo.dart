@@ -13,7 +13,9 @@ class UserVO{
   String? userName;
   @JsonKey(name : 'phoneNumber')
   String? phoneNumber;
-  UserVO({this.userId,this.name,this.userName,this.phoneNumber,this.email,});
+  @JsonKey(name: 'token')
+  String? token;
+  UserVO({this.userId,this.name,this.userName,this.phoneNumber,this.email,this.token});
   factory UserVO.fromJson(Map<String,dynamic> json) =>_$UserVOFromJson(json);
   Map<String,dynamic> toJson()=>_$UserVOToJson(this);
 

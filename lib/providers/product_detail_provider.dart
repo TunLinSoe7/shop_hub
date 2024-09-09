@@ -7,7 +7,17 @@ class ProductDetailProvider extends ChangeNotifier{
   bool _isDispose = false;
   ProductVO? productVO;
   List<ProductVO>? relatedProducts = [];
-
+  int quantity = 0;
+  void increase(int newQuantity){
+    quantity = newQuantity+1;
+    notifyListeners();
+  }
+  void decrease(int newQuantity){
+    if(quantity > 0 ){
+      quantity = newQuantity-1;
+      notifyListeners();
+    }
+  }
   final ProductDataAgent _productDataAgent = ProductDataAgentImpl();
   /// fetch product by id from firestore
   ProductDetailProvider(String id,String category){

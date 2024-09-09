@@ -12,5 +12,7 @@ abstract class ProductDataAgent{
   Stream<List<ProductVO>?> fetchFashionsProductStream();
   /// Fetch Product By Id
   Future<ProductVO?> fetchProductByIdStream(String id);
+  /// search product
+  Stream<List<ProductVO>?> searchProducts(String searchTerm);
 
 }

@@ -8,6 +8,8 @@ class ProductVO{
   final String? category;
   @JsonKey(name: 'name')
   final String? name;
+  @JsonKey(name: 'search_name')
+  final String? searchName;
   @JsonKey(name: 'image')
   final String? image;
   @JsonKey(name: 'description')
@@ -16,8 +18,10 @@ class ProductVO{
   final int? price;
   @JsonKey(name: 'isFlashSale')
   final bool? isFlashSale;
+  @JsonKey(name: 'stock')
+  final int? stock;
 
-  ProductVO({this.category,this.name,this.image,this.description,this.price,this.isFlashSale,this.productId});
+  ProductVO({this.searchName,this.stock,this.category,this.name,this.image,this.description,this.price,this.isFlashSale,this.productId});
   factory ProductVO.fromJson(Map<String,dynamic> json)=>_$ProductVOFromJson(json);
   Map<String,dynamic> toJson()=>_$ProductVOToJson(this);
 }

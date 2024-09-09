@@ -1,7 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_hub/data/vos/product_vo.dart';
+import 'package:shop_hub/providers/cart_provider.dart';
+import 'package:shop_hub/providers/product_detail_provider.dart';
 
-Container buildAddToCart() {
+Container buildAddToCart(BuildContext context,ProductVO productVO,int quantity,ProductDetailProvider detailProvider) {
+  final provider = context.read<CartProvider>();
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
     color: Colors.white,
@@ -16,25 +21,35 @@ Container buildAddToCart() {
           ),
           child: Row(
             children: [
-              IconButton(onPressed: (){}, icon:const Icon(Icons.remove,color: Colors.red,)),
-              const Text('1'),
-              IconButton(onPressed: (){}, icon:const Icon(Icons.add,color: Colors.red,)),
+              IconButton(onPressed: (){
+               detailProvider.decrease(quantity);
+              }, icon:const Icon(Icons.remove,color: Colors.red,)),
+              /// show quantity
+              Text('$quantity'),
+              IconButton(onPressed: (){
+               detailProvider.increase(quantity);
+              }, icon:const Icon(Icons.add,color: Colors.red,)),
             ],
           ),
         ),
         const SizedBox(width: 10,),
         Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(13),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.red
+          child: GestureDetector(
+            onTap: (){
+              provider.addToCart(productVO,quantity);
+            },
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(13),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red
+              ),
+              child: const Text('Add To Cart',style: TextStyle(
+                  color: Colors.white
+              ),),
             ),
-            child: const Text('Add To Cart',style: TextStyle(
-                color: Colors.white
-            ),),
           ),
         ),
       ],

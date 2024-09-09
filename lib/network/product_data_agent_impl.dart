@@ -52,4 +52,12 @@ class ProductDataAgentImpl extends ProductDataAgent{
       .collection('products')
       .doc(id)
       .get().then((value) => ProductVO.fromJson(value.data() as Map<String,dynamic>));
+/// search products
+  @override
+  Stream<List<ProductVO>?> searchProducts(String searchTerm)=>_firebaseFirestore
+      .collection('products')
+      .where('search_name',isGreaterThanOrEqualTo: searchTerm)
+      .where('search_name',isLessThanOrEqualTo: searchTerm+'\uf8ff')
+      .snapshots()
+      .map((event) => event.docs.map((e) => ProductVO.fromJson(e.data())).toList());
 }

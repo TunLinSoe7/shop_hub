@@ -46,7 +46,12 @@ dependencies:
   carousel_slider: ^5.0.0
   dots_indicator: ^3.0.0
   iconsax: ^0.0.8
+  toastification: ^2.2.0
   firebase_auth: ^4.5.0
+  firebase_messaging: ^14.7.10
+  flutter_local_notifications: ^17.2.2
+  shared_preferences: ^2.1.0
+  permission_handler: ^11.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class GridProductItemView extends StatelessWidget {
   const GridProductItemView({
-    super.key, this.image, this.name, this.price, this.flashSalePrice, required this.isFlashSale,
+    super.key, this.image, this.name, this.price, this.flashSalePrice, required this.isFlashSale, this.onTap,
   });
 
   final String? image;
@@ -11,6 +11,7 @@ class GridProductItemView extends StatelessWidget {
   final String? price;
   final String? flashSalePrice;
   final bool isFlashSale;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,9 @@ class GridProductItemView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white
                 ),
-                child: CachedNetworkImage(imageUrl: image ?? '',height: 130,width: 150,fit: BoxFit.fill,),
+                child: GestureDetector(
+                  onTap: onTap,
+                    child: CachedNetworkImage(imageUrl: image ?? '',height: 130,width: 150,fit: BoxFit.fill,)),
               ),
               const SizedBox(height: 10,),
               Text(name ?? '',style: const TextStyle(

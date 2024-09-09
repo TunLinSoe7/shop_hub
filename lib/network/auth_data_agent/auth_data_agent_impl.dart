@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../../data/vos/user_vo.dart';
 import 'auth_data_agent.dart';
@@ -29,14 +30,18 @@ class AuthDataAgentImpl extends AuthDataAgent{
       final userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       final uid = _auth.currentUser!.uid;
       final userName = '@${email.split('@')[0]}';
-      UserVO userVO = UserVO(
-        userId: uid,
-        name: name,
-        userName:userName,
-        email: email,
-        phoneNumber: phoneNumber
-      );
-      saveUserData(userVO);
+      await FirebaseMessaging.instance.getToken().then((value) {
+        UserVO userVO = UserVO(
+            userId: uid,
+            name: name,
+            userName:userName,
+            email: email,
+            phoneNumber: phoneNumber,
+            token: value,
+        );
+        saveUserData(userVO);
+      });
+
       return userCredential;
     } on FirebaseException catch(e){
       throw Exception(e.code);

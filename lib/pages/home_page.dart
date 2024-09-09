@@ -7,6 +7,7 @@ import 'package:shop_hub/data/vos/product_vo.dart';
 import 'package:shop_hub/pages/fashion_all_page.dart';
 import 'package:shop_hub/pages/prodcut_by_category_page.dart';
 import 'package:shop_hub/pages/product_detail_screen.dart';
+import 'package:shop_hub/pages/search_page.dart';
 import 'package:shop_hub/pages/see_all_flash_sale_page.dart';
 import 'package:shop_hub/providers/home_screen_provider.dart';
 import 'package:shop_hub/utils/helper_functions/helper_functions.dart';
@@ -98,22 +99,27 @@ class _HomePageState extends State<HomePage> {
     return SliverAppBar(
               surfaceTintColor: Colors.white,
               backgroundColor: Colors.white,
-              title: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                alignment: Alignment.centerLeft,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: provider.searchBoxColor,
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.search,color: Colors.grey.withOpacity(0.5),),
-                    Text('Search Products',style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.withOpacity(0.5)
-                    ),)
-                  ],
+              title: GestureDetector(
+                onTap: (){
+                  HelperFunctions.navigateToScreen(const SearchPage(), context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  alignment: Alignment.centerLeft,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: provider.searchBoxColor,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search,color: Colors.grey.withOpacity(0.5),),
+                      Text('Search Products',style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.withOpacity(0.5)
+                      ),)
+                    ],
+                  ),
                 ),
               ),
               actions: [
@@ -160,22 +166,12 @@ class FlashSaleTitleAndStartEndTimeWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Flash Sale',style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold
-        ),),
+
         Row(
           children: [
-            const Text('Flash Sale end in :'),
-            const FlashSaleTime(),
-            const Text(' : ',style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold
-            ),),
-            const FlashSaleTime(),
-            const Text(' : ',style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold
+            const Text('Flash Sale Today⚡',style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold
             ),),
             const Spacer(),
             GestureDetector(
@@ -207,6 +203,9 @@ class FashionProductWidget extends StatelessWidget {
             itemCount: fashions?.length ?? 0,itemBuilder: (_,index){
               final fashionProducts = fashions?[index];
           return ProductItemView(
+            onTap: (){
+              HelperFunctions.navigateToScreen(ProductDetailScreen(productId: fashionProducts?.productId ?? '', category: fashionProducts?.category ?? ''), context);
+            },
             image: fashionProducts?.image ?? '',
             name: fashionProducts?.name ?? '',
             price: '${fashionProducts?.price}',
@@ -281,7 +280,7 @@ class ProductItemView extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               color: Colors.red,
             ),
-            child: const Text('Promo',style: TextStyle(
+            child: const Text('OnSale',style: TextStyle(
               color: Colors.white,
               fontSize: 12
             ),))):const SizedBox(),
@@ -320,25 +319,6 @@ class FlashSaleProductWidget extends StatelessWidget {
   }
 }
 
-class FlashSaleTime extends StatelessWidget {
-const FlashSaleTime({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.red
-      ),
-      child: const Text('00',style: TextStyle(
-        color: Colors.white
-      ),),
-    );
-  }
-}
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({

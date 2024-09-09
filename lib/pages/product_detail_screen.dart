@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_hub/data/vos/product_vo.dart';
 import 'package:shop_hub/pages/home_page.dart';
 import 'package:shop_hub/providers/product_detail_provider.dart';
 import '../widgets/detail_page_widgets.dart';
@@ -13,6 +14,7 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: ChangeNotifierProvider(
         create: (_) => ProductDetailProvider(productId,category),
@@ -85,7 +87,7 @@ class ProductDetailScreen extends StatelessWidget {
               ),
 
               /// increase decrease and add to cart button
-              bottomNavigationBar: buildAddToCart(),
+              bottomNavigationBar: buildAddToCart(context,provider.productVO ?? ProductVO(),provider.quantity,provider),
             );
           },
         ),

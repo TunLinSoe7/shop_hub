@@ -1,10 +1,9 @@
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_hub/data/vos/product_vo.dart';
+import 'package:shop_hub/pages/product_detail_screen.dart';
 import 'package:shop_hub/providers/product_by_category_provider.dart';
+import 'package:shop_hub/utils/helper_functions/helper_functions.dart';
 
 import '../utils/item_views/grid_product_item_views.dart';
 
@@ -55,6 +54,9 @@ class ProductByCategoryPage extends StatelessWidget {
                         crossAxisCount:2), itemBuilder: (_,index){
                   final product = provider.products[index];
                   return GridProductItemView(
+                    onTap: (){
+                      HelperFunctions.navigateToScreen(ProductDetailScreen(productId: product.productId ?? '', category: category), context);
+                    },
                       isFlashSale: product.isFlashSale ?? false,
                     image:product.image,
                     name:product.name,
@@ -62,7 +64,6 @@ class ProductByCategoryPage extends StatelessWidget {
                     flashSalePrice:'${product.isFlashSale}'
                   );
                 }))
-               // Text('${provider.products.first.name}')
               ],
             ),
           );
